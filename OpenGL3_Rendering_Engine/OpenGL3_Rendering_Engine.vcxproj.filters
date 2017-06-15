@@ -13,5 +13,33 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\ORE">
+      <UniqueIdentifier>{59700cfc-6284-4f5d-bc51-7eb1876840cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ORE">
+      <UniqueIdentifier>{fab5318a-25f0-48ab-bcaf-0aeb31803b59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Testing">
+      <UniqueIdentifier>{899733cb-8295-47f6-88a0-f12fbde7d532}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ORE\Engine.cpp">
+      <Filter>Source Files\ORE</Filter>
+    </ClCompile>
+    <ClCompile Include="ORE\World.cpp">
+      <Filter>Source Files\ORE</Filter>
+    </ClCompile>
+    <ClCompile Include="Testing\main.cpp">
+      <Filter>Source Files\Testing</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ORE\Engine.h">
+      <Filter>Header Files\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="ORE\World.h">
+      <Filter>Header Files\ORE</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

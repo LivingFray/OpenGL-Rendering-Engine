@@ -1,0 +1,17 @@
+World
+|
+|-Add/Get/Remove Object
+|-Set/Get Camera
+|-Add/Get/Remove Light
+|
+|
+|-Object[]
+|-Camera
+    |-Position
+    |-Angle
+    |-FOV
+    |-Clip (-X/+X/-Y/+Y/Near/Far)
+
+
+
+Lighting: Look into deferred shading/lighting
