@@ -15,3 +15,9 @@ World
 
 
 Lighting: Look into deferred shading/lighting
+Shadows: Group objects into static and dynamic, precalculate depth map for static objects + static lights
+Skybox
+
+Shaders/Programs: Cleanup unused/add delete method
+
+Parent hierarchy for model matrices

@@ -18,6 +18,7 @@
     </Filter>
     <Filter Include="Header Files\ORE">
       <UniqueIdentifier>{fab5318a-25f0-48ab-bcaf-0aeb31803b59}</UniqueIdentifier>
+      <Extensions>ORE/*.*</Extensions>
     </Filter>
     <Filter Include="Source Files\Testing">
       <UniqueIdentifier>{899733cb-8295-47f6-88a0-f12fbde7d532}</UniqueIdentifier>
@@ -33,12 +34,24 @@
     <ClCompile Include="Testing\main.cpp">
       <Filter>Source Files\Testing</Filter>
     </ClCompile>
+    <ClCompile Include="ORE\Skybox.cpp">
+      <Filter>Source Files\ORE</Filter>
+    </ClCompile>
+    <ClCompile Include="ORE\Camera.cpp">
+      <Filter>Source Files\ORE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ORE\Engine.h">
       <Filter>Header Files\ORE</Filter>
     </ClInclude>
     <ClInclude Include="ORE\World.h">
+      <Filter>Header Files\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="ORE\Skybox.h">
+      <Filter>Header Files\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="ORE\Camera.h">
       <Filter>Header Files\ORE</Filter>
     </ClInclude>
   </ItemGroup>
