@@ -1,25 +1,27 @@
 #include "Skybox.h"
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
 #include "Camera.h"
-#include "Engine.h"
+#include <stb_image.h>
 namespace ORE {
 	Skybox::Skybox() {
 		cube = 0;
+		glGenVertexArrays(1, &vertexArray);
+		glBindVertexArray(vertexArray);
 		glGenBuffers(1, &vertexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof vertexData, vertexData, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), &vertexData, GL_STATIC_DRAW);
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-		glDisableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
 		program = getProgram("skybox");
 		viewUniform = glGetUniformLocation(program, "view");
 		projUniform = glGetUniformLocation(program, "projection");
 		cubeSampler = glGetUniformLocation(program, "skybox");
+		glBindVertexArray(0);
 	}
 
 
 	Skybox::~Skybox() {
+		glDeleteVertexArrays(1, &vertexArray);
+		glDeleteBuffers(1, &vertexBuffer);
 	}
 
 
@@ -29,23 +31,24 @@ namespace ORE {
 			//Set shaders
 			glUseProgram(program);
 			//Disable depth buffer
-			glDepthMask(GL_FALSE);
-			glEnableVertexAttribArray(0);
-			glBindVertexArray(vertexBuffer);
-			glBindTexture(GL_TEXTURE_CUBE_MAP, cube);
-			glActiveTexture(GL_TEXTURE0);
+			//glDepthMask(GL_FALSE);
+			glDepthFunc(GL_LEQUAL);
 			glUniform1i(cubeSampler, 0);
 			//Remove translation from camera
 			glm::mat4 view = glm::mat4(glm::mat3(camera.getView()));
 			glm::mat4 proj = camera.getProjection();
 			glUniformMatrix4fv(viewUniform, 1, GL_FALSE, &view[0][0]);
 			glUniformMatrix4fv(projUniform, 1, GL_FALSE, &proj[0][0]);
+			glBindVertexArray(vertexArray);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_CUBE_MAP, cube);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
-			glDisableVertexAttribArray(0);
 			//Reenable depth buffer
-			glDepthMask(GL_TRUE);
+			glDepthFunc(GL_LESS);
+			//glDepthMask(GL_TRUE);
 		}
 	}
+
 
 	// Sets the textures of the skybox
 	void Skybox::setTextures(const char* right, const char* left, const char* top, const char* bottom, const char* front, const char* back) {

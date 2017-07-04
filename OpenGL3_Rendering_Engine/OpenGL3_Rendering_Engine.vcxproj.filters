@@ -40,6 +40,18 @@
     <ClCompile Include="ORE\Camera.cpp">
       <Filter>Source Files\ORE</Filter>
     </ClCompile>
+    <ClCompile Include="ORE\Renderable.cpp">
+      <Filter>Source Files\ORE</Filter>
+    </ClCompile>
+    <ClCompile Include="ORE\Transformable.cpp">
+      <Filter>Source Files\ORE</Filter>
+    </ClCompile>
+    <ClCompile Include="ORE\Mesh.cpp">
+      <Filter>Source Files\ORE</Filter>
+    </ClCompile>
+    <ClCompile Include="ORE\SimpleVAO.cpp">
+      <Filter>Source Files\ORE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ORE\Engine.h">
@@ -52,6 +64,18 @@
       <Filter>Header Files\ORE</Filter>
     </ClInclude>
     <ClInclude Include="ORE\Camera.h">
+      <Filter>Header Files\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="ORE\Renderable.h">
+      <Filter>Header Files\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="ORE\Transformable.h">
+      <Filter>Header Files\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="ORE\Mesh.h">
+      <Filter>Header Files\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="ORE\SimpleVAO.h">
       <Filter>Header Files\ORE</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,7 +4,8 @@
 #include <vector>
 #include <fstream>
 #include <string>
-
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 GLFWwindow* ORE::window;
 std::map<std::string, GLuint> ORE::programs;
@@ -92,10 +93,10 @@ GLuint ORE::getProgram(std::string program) {
 		int logLength;
 		glGetShaderiv(vertex, GL_COMPILE_STATUS, &result);
 		glGetShaderiv(vertex, GL_INFO_LOG_LENGTH, &logLength);
-		if (logLength > 0) {
+		if (result!=GL_TRUE || logLength > 0) {
 			std::vector<char> errorMessage(logLength + 1);
 			glGetShaderInfoLog(vertex, logLength, NULL, &errorMessage[0]);
-			printf("%s\n", &errorMessage[0]);
+			printf("ERROR: %s\n", &errorMessage[0]);
 		}
 		//Compile fragment shader
 		glShaderSource(fragment, 1, &fragChars, NULL);
@@ -103,10 +104,10 @@ GLuint ORE::getProgram(std::string program) {
 		//Check for errors
 		glGetShaderiv(fragment, GL_COMPILE_STATUS, &result);
 		glGetShaderiv(fragment, GL_INFO_LOG_LENGTH, &logLength);
-		if (logLength > 0) {
+		if (result != GL_TRUE || logLength > 0) {
 			std::vector<char> errorMessage(logLength + 1);
 			glGetShaderInfoLog(fragment, logLength, NULL, &errorMessage[0]);
-			printf("%s\n", &errorMessage[0]);
+			printf("ERROR: %s\n", &errorMessage[0]);
 		}
 		p = glCreateProgram();
 		glAttachShader(p, vertex);
@@ -114,10 +115,10 @@ GLuint ORE::getProgram(std::string program) {
 		glLinkProgram(p);
 		glGetProgramiv(p, GL_LINK_STATUS, &result);
 		glGetProgramiv(p, GL_INFO_LOG_LENGTH, &logLength);
-		if (logLength > 0) {
+		if (result != GL_TRUE || logLength > 0) {
 			std::vector<char> errorMessage(logLength + 1);
 			glGetProgramInfoLog(p, logLength, NULL, &errorMessage[0]);
-			printf("%s\n", &errorMessage[0]);
+			printf("ERROR: %s\n", &errorMessage[0]);
 		}
 		glDetachShader(p, vertex);
 		glDetachShader(p, fragment);
@@ -142,4 +143,22 @@ std::string ORE::readFile(std::string filename) {
 		file += "\n" + line;
 	inStream.close();
 	return file;
+}
+
+
+GLuint ORE::loadImage(std::string filename) {
+	//TODO: Handling to allow for automatic deletion
+	GLuint tex;
+	glGenTextures(1, &tex);
+	int width, height, channels;
+	unsigned char* data = nullptr;
+	data = stbi_load(filename.c_str(), &width, &height, &channels, 0);
+	glBindTexture(GL_TEXTURE_2D, tex);
+	glTexImage2D(GL_TEXTURE_2D, 0, channels == 3 ? GL_RGB : GL_RGBA, width, height, 0, channels == 3 ? GL_RGB : GL_RGBA, GL_UNSIGNED_BYTE, data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	stbi_image_free(data);
+	return tex;
 }

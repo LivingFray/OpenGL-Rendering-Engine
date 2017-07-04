@@ -18,12 +18,19 @@ namespace ORE {
 	void World::draw() const{
 		if (window) {
 			//temp
-			glClearColor(0.0, 0.0, 0.0, 1.0);
+			glClearColor(1.0, 0.0, 0.0, 1.0);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			////Draw the world
 			//Draw objects
+			glEnable(GL_DEPTH_TEST);
+			glDepthFunc(GL_LESS);
+			for(Renderable* r: renderables) {
+				r->draw(camera);
+			}
 			//Draw the skybox
-			skybox.draw(camera);
+			if (skybox) {
+				skybox->draw(camera);
+			}
 		}
 		glfwSwapBuffers(window);
 	}
@@ -35,7 +42,13 @@ namespace ORE {
 
 
 	// Sets the skybox of the world
-	void World::setSkybox(Skybox s) {
+	void World::setSkybox(Skybox* s) {
 		this->skybox = s;
+	}
+
+
+	// Adds a new renderable to the world
+	void World::addRenderable(Renderable* r) {
+		renderables.push_back(r);
 	}
 }

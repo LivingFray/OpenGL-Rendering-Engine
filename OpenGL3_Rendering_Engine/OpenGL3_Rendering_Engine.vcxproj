@@ -21,14 +21,22 @@
   <ItemGroup>
     <ClCompile Include="ORE\Camera.cpp" />
     <ClCompile Include="ORE\Engine.cpp" />
+    <ClCompile Include="ORE\Mesh.cpp" />
+    <ClCompile Include="ORE\Renderable.cpp" />
+    <ClCompile Include="ORE\SimpleVAO.cpp" />
     <ClCompile Include="ORE\Skybox.cpp" />
+    <ClCompile Include="ORE\Transformable.cpp" />
     <ClCompile Include="ORE\World.cpp" />
     <ClCompile Include="Testing\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ORE\Camera.h" />
     <ClInclude Include="ORE\Engine.h" />
+    <ClInclude Include="ORE\Mesh.h" />
+    <ClInclude Include="ORE\Renderable.h" />
+    <ClInclude Include="ORE\SimpleVAO.h" />
     <ClInclude Include="ORE\Skybox.h" />
+    <ClInclude Include="ORE\Transformable.h" />
     <ClInclude Include="ORE\World.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

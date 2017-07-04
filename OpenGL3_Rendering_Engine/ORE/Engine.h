@@ -17,5 +17,5 @@ namespace ORE {
 	void setVSync(bool vsync);
 	GLuint getProgram(std::string program);
 	std::string readFile(std::string filename);
+	GLuint loadImage(std::string filename);
 };
-

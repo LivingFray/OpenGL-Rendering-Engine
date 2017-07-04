@@ -1,6 +1,9 @@
 #pragma once
 #include "Skybox.h"
 #include "Camera.h"
+#include "Renderable.h"
+#include <vector>
+
 namespace ORE {
 	class World {
 	public:
@@ -11,9 +14,12 @@ namespace ORE {
 		// Gets a pointer to the camera
 		Camera* getCamera();
 		// Sets the skybox of the world
-		void setSkybox(Skybox s);
+		void setSkybox(Skybox* s);
+		// Adds a new renderable to the world
+		void addRenderable(Renderable* r);
 	private:
 		Camera camera;
-		Skybox skybox;
+		Skybox* skybox;
+		std::vector<Renderable*> renderables;
 	};
 }
