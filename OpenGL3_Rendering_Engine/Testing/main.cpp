@@ -51,6 +51,50 @@ void moveCamera(ORE::Camera* c, double t) {
 	c->setPosition(pos);
 }
 
+//Shamelessly lifted from learnopengl.com
+float vertices[] = {
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+	0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+	0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+	0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+	0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+	0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+};
 
 int main() {
 	ORE::init(1024, 768);
@@ -58,19 +102,28 @@ int main() {
 	ORE::Camera* cam = world.getCamera();
 	ORE::SimpleVAO testVAO(ORE::loadImage("Testing/tmp.png"));
 	ORE::Skybox sky;
+	//Convert test data into vectors
 	std::vector<GLfloat> vert;
-	vert.push_back(-1.0f);
-	vert.push_back(-1.0f);
-	vert.push_back(0.0f);
-
-	vert.push_back(1.0f);
-	vert.push_back(-1.0f);
-	vert.push_back(0.0f);
-
-	vert.push_back(0.0f);
-	vert.push_back(1.0f);
-	vert.push_back(0.0f);
 	std::vector<GLfloat> uv;
+	for (int i=0; i < 36; i++) {
+		vert.push_back(vertices[i * 5 + 0]);
+		vert.push_back(vertices[i * 5 + 1]);
+		vert.push_back(vertices[i * 5 + 2]);
+		uv.push_back(vertices[i * 5 + 3]);
+		uv.push_back(vertices[i * 5 + 4]);
+	}
+	/*
+	vert.push_back(-1.0f);
+	vert.push_back(-1.0f);
+	vert.push_back(0.0f);
+
+	vert.push_back(1.0f);
+	vert.push_back(-1.0f);
+	vert.push_back(0.0f);
+
+	vert.push_back(0.0f);
+	vert.push_back(1.0f);
+	vert.push_back(0.0f);
 	uv.push_back(0.0f);
 	uv.push_back(0.0f);
 
@@ -79,6 +132,7 @@ int main() {
 
 	uv.push_back(0.5f);
 	uv.push_back(1.0f);
+	*/
 	std::vector<GLfloat> norm;
 	norm.push_back(0.0f);
 	norm.push_back(0.0f);
