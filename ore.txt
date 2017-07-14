@@ -19,6 +19,7 @@ Shadows: Group objects into static and dynamic, precalculate depth map for stati
 Skybox
 
 Shaders/Programs: Cleanup unused/add delete method
+Load shaders at compile time
 
 Parent hierarchy for model matrices
 	Handle parents being deleted

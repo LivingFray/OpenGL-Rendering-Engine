@@ -28,7 +28,7 @@ namespace ORE {
 
 	// Gets the view matrix associated with the camera
 	glm::mat4 Camera::getView() const {
-		glm::mat4 view = glm::translate(glm::mat4(1.0f), pos);
+		glm::mat4 view = glm::translate(glm::mat4(1.0f), -pos);
 		view = glm::toMat4(rot) * view;
 		return view;
 	}

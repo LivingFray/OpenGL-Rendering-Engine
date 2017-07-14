@@ -25,27 +25,23 @@ namespace ORE {
 	}
 
 
-	void Skybox::draw(Camera camera) const{
+	void Skybox::draw(World* world) {
 		//Only draw if the textures exist
 		if (cube) {
 			//Set shaders
 			glUseProgram(program);
-			//Disable depth buffer
-			//glDepthMask(GL_FALSE);
 			glDepthFunc(GL_LEQUAL);
 			glUniform1i(cubeSampler, 0);
 			//Remove translation from camera
-			glm::mat4 view = glm::mat4(glm::mat3(camera.getView()));
-			glm::mat4 proj = camera.getProjection();
+			glm::mat4 view = glm::mat4(glm::mat3(world->getCamera()->getView()));
+			glm::mat4 proj = world->getCamera()->getProjection();
 			glUniformMatrix4fv(viewUniform, 1, GL_FALSE, &view[0][0]);
 			glUniformMatrix4fv(projUniform, 1, GL_FALSE, &proj[0][0]);
 			glBindVertexArray(vertexArray);
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_CUBE_MAP, cube);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
-			//Reenable depth buffer
 			glDepthFunc(GL_LESS);
-			//glDepthMask(GL_TRUE);
 		}
 	}
 

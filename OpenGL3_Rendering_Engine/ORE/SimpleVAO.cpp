@@ -1,15 +1,17 @@
 #include "SimpleVAO.h"
 
 namespace ORE {
-	SimpleVAO::SimpleVAO(GLuint texture){
-		program = getProgram("simpleVAO");
+	SimpleVAO::SimpleVAO(GLuint texture, GLuint specular, float shininess){
+		//program = getProgram("simpleMesh");
+		program = getProgram("singleLight");
 		this->texture = texture;
+		this->specular = specular;
+		this->shininess = shininess;
 		glGenVertexArrays(1, &vertexArray);
 		glGenBuffers(1, &vertexBuffer);
 		glGenBuffers(1, &uvBuffer);
 		glGenBuffers(1, &normalBuffer);
-		mvpUniform = glGetUniformLocation(program, "mvp");
-		textureUniform = glGetUniformLocation(program, "textureSampler");
+		//mvpUniform = glGetUniformLocation(program, "mvp");
 	}
 
 
@@ -22,9 +24,8 @@ namespace ORE {
 
 
 	// Draws the vertex array object
-	void SimpleVAO::draw(Camera cam) {
-		//Calculate MVP matrix
-		glm::mat4 mvp = cam.getProjection() * cam.getView() * this->getGlobalMatrix();
+	void SimpleVAO::draw(World* world) {
+		Camera cam = *(world->getCamera());
 		//Use correct shaders
 		glUseProgram(program);
 		//Enable the VAO
@@ -32,9 +33,25 @@ namespace ORE {
 		//Pass texture to shaders
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture);
-		glUniform1i(textureUniform, 0);
+		glUniform1i(glGetUniformLocation(program, "diffuse"), 0);
+		//Specular texture
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, specular);
+		glUniform1i(glGetUniformLocation(program, "specular"), 1);
+		//Shininess
+		glUniform1f(glGetUniformLocation(program, "shininess"), shininess);
+		//Update lighting AGAIN TEMP
+		world->getLight()->updateShader(program);
+		//Pass matrices to shader
+		glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, false, &(this->getGlobalMatrix())[0][0]);
+		glm::mat3 inv = glm::mat3(glm::transpose(glm::inverse(this->getGlobalMatrix())));
+		glUniformMatrix3fv(glGetUniformLocation(program, "transInvModel"), 1, false, &inv[0][0]);
+		glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, false, &(cam.getView())[0][0]);
+		glUniformMatrix4fv(glGetUniformLocation(program, "projection"), 1, false, &(cam.getProjection())[0][0]);
+		//Pass the camera position
+		glUniform3fv(glGetUniformLocation(program, "viewPos"), 1, &(cam.getPosition())[0]);
 		//Pass the MVP matrix to the shaders
-		glUniformMatrix4fv(mvpUniform, 1, false, &mvp[0][0]);
+		//glUniformMatrix4fv(mvpUniform, 1, false, &mvp[0][0]);
 		//Draw the VAO
 		glDrawArrays(GL_TRIANGLES, 0, vertices.size() / 3);
 	}
@@ -57,9 +74,9 @@ namespace ORE {
 		glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(GLfloat), &uvs[0], GL_STATIC_DRAW);
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		//Pass normals
-		//glEnableVertexAttribArray(2);
-		//glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
-		//glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(GLfloat), &normals[0], GL_STATIC_DRAW);
-		//glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glEnableVertexAttribArray(2);
+		glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+		glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(GLfloat), &normals[0], GL_STATIC_DRAW);
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 }

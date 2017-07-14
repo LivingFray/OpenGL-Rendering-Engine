@@ -83,6 +83,6 @@ namespace ORE {
 		glm::mat4 m4_pos = glm::translate(glm::mat4(1.0f), pos);
 		glm::mat4 m4_rot = glm::toMat4(rot);
 		glm::mat4 m4_scale = glm::scale(glm::mat4(1.0f), scale);
-		matrix = m4_scale * m4_rot * m4_pos;
+		matrix = m4_pos * m4_rot * m4_scale;
 	}
 }

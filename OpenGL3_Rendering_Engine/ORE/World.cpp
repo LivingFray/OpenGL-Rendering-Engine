@@ -1,5 +1,7 @@
 #include "World.h"
 #include "Engine.h"
+#include "Skybox.h"
+#include "Renderable.h"
 
 namespace ORE {
 	World::World() {
@@ -15,7 +17,7 @@ namespace ORE {
 
 
 	// Renders the world
-	void World::draw() const{
+	void World::draw() {
 		if (window) {
 			//temp
 			glClearColor(1.0, 0.0, 0.0, 1.0);
@@ -25,11 +27,11 @@ namespace ORE {
 			glEnable(GL_DEPTH_TEST);
 			glDepthFunc(GL_LESS);
 			for(Renderable* r: renderables) {
-				r->draw(camera);
+				r->draw(this);
 			}
 			//Draw the skybox
 			if (skybox) {
-				skybox->draw(camera);
+				skybox->draw(this);
 			}
 		}
 		glfwSwapBuffers(window);
@@ -50,5 +52,13 @@ namespace ORE {
 	// Adds a new renderable to the world
 	void World::addRenderable(Renderable* r) {
 		renderables.push_back(r);
+	}
+
+
+	Light* World::getLight() {
+		return &lightSource;
+	}
+	void World::setLight(Light l) {
+		this->lightSource = l;
 	}
 }

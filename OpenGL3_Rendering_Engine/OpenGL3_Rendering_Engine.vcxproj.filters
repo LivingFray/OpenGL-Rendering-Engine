@@ -52,6 +52,9 @@
     <ClCompile Include="ORE\SimpleVAO.cpp">
       <Filter>Source Files\ORE</Filter>
     </ClCompile>
+    <ClCompile Include="ORE\Light.cpp">
+      <Filter>Source Files\ORE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ORE\Engine.h">
@@ -76,6 +79,9 @@
       <Filter>Header Files\ORE</Filter>
     </ClInclude>
     <ClInclude Include="ORE\SimpleVAO.h">
+      <Filter>Header Files\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="ORE\Light.h">
       <Filter>Header Files\ORE</Filter>
     </ClInclude>
   </ItemGroup>

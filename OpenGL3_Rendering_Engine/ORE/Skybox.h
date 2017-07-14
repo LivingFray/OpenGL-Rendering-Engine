@@ -1,14 +1,15 @@
 #pragma once
 #include "Engine.h"
+#include "Renderable.h"
 namespace ORE {
 	class Camera;
 
-	class Skybox {
+	class Skybox: public Renderable{
 	public:
 		Skybox();
 		~Skybox();
 		// Draws the skybox as seen from the camera
-		void draw(Camera camera) const;
+		void draw(World* world);
 		// Sets the textures of the skybox
 		void setTextures(const char* right, const char* left, const char* top, const char* bottom, const char* front, const char* back);
 	private:
