@@ -105,7 +105,17 @@ int main() {
 	ORE::init(1024, 768);
 	ORE::World world;
 	ORE::Camera* cam = world.getCamera();
-	ORE::SimpleVAO testVAO(ORE::loadImage("Testing/tmp.png"), ORE::loadImage("Testing/tmpSpec.png"), 8.0f);
+	ORE::SimpleVAO testVAO;
+	GLuint texs[] = {
+		ORE::loadImage("Testing/tmp.png"),
+		ORE::loadImage("Testing/tmpSpec.png"),
+		ORE::loadImage("Testing/tmpEm.png"),
+		ORE::loadImage("Testing/tmpNorm.png"),
+	};
+	testVAO.setTexture(texs[0]);
+	//testVAO.setSpecular(texs[1]);
+	//testVAO.setEmission(texs[2]);
+	testVAO.setNormal(texs[3]);
 	ORE::Skybox sky;
 	/*
 	ORE::Light sun;
@@ -123,9 +133,9 @@ int main() {
 	point.setType(ORE::LightType::POINT);
 	point.setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 	point.setAmbient(glm::vec3(0.25f, 0.25f, 0.25f));
-	point.setDiffuse(glm::vec3(1.0f, 0.5f, 0.5f));
+	point.setDiffuse(glm::vec3(1.0f, 1.0f, 1.0f));
 	point.setSpecular(glm::vec3(1.0f, 1.0f, 1.0f));
-	point.setAttenuation(1.0f, 0.7f, 1.8f);
+	point.setAttenuation(1.0f, 0.09f, 0.032f);
 	world.setLight(point);
 	//*/
 	//*
