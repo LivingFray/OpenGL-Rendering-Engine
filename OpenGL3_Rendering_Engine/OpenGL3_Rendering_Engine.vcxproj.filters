@@ -46,13 +46,19 @@
     <ClCompile Include="ORE\Transformable.cpp">
       <Filter>Source Files\ORE</Filter>
     </ClCompile>
-    <ClCompile Include="ORE\Mesh.cpp">
-      <Filter>Source Files\ORE</Filter>
-    </ClCompile>
     <ClCompile Include="ORE\SimpleVAO.cpp">
       <Filter>Source Files\ORE</Filter>
     </ClCompile>
     <ClCompile Include="ORE\Light.cpp">
+      <Filter>Source Files\ORE</Filter>
+    </ClCompile>
+    <ClCompile Include="ORE\BaseMesh.cpp">
+      <Filter>Source Files\ORE</Filter>
+    </ClCompile>
+    <ClCompile Include="ORE\Mesh.cpp">
+      <Filter>Source Files\ORE</Filter>
+    </ClCompile>
+    <ClCompile Include="ORE\Model.cpp">
       <Filter>Source Files\ORE</Filter>
     </ClCompile>
   </ItemGroup>
@@ -75,13 +81,19 @@
     <ClInclude Include="ORE\Transformable.h">
       <Filter>Header Files\ORE</Filter>
     </ClInclude>
-    <ClInclude Include="ORE\Mesh.h">
-      <Filter>Header Files\ORE</Filter>
-    </ClInclude>
     <ClInclude Include="ORE\SimpleVAO.h">
       <Filter>Header Files\ORE</Filter>
     </ClInclude>
     <ClInclude Include="ORE\Light.h">
+      <Filter>Header Files\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="ORE\BaseMesh.h">
+      <Filter>Header Files\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="ORE\Mesh.h">
+      <Filter>Header Files\ORE</Filter>
+    </ClInclude>
+    <ClInclude Include="ORE\Model.h">
       <Filter>Header Files\ORE</Filter>
     </ClInclude>
   </ItemGroup>

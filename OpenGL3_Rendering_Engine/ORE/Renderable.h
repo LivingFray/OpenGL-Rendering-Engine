@@ -8,5 +8,6 @@ namespace ORE {
 		virtual ~Renderable();
 		// Draws the renderable
 		virtual void draw(ORE::World* world) = 0;
+		bool visible = true;
 	};
 }

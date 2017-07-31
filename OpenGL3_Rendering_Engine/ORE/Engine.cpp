@@ -7,8 +7,16 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
+//Flag that we could like to use the dedicated graphics card if multiple are available
+extern "C"
+{
+	__declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001;
+	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+
 GLFWwindow* ORE::window;
 std::map<std::string, GLuint> ORE::programs;
+std::map<std::string, GLuint> ORE::textures;
 
 void ORE::__sharedInit() {
 	if (!window) {
@@ -21,7 +29,9 @@ void ORE::__sharedInit() {
 	glfwWindowHint(GLFW_VERSION_MINOR, 3);
 	//No ignoring the above please
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwMakeContextCurrent(window); // Initialize GLEW
 	glewExperimental = true;
@@ -30,6 +40,9 @@ void ORE::__sharedInit() {
 		glfwTerminate();
 		exit(1);
 	}
+	std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl
+		<< "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl
+		<< "Vendor: " << glGetString(GL_VENDOR) << std::endl;
 }
 
 
@@ -148,17 +161,24 @@ std::string ORE::readFile(std::string filename) {
 
 GLuint ORE::loadImage(std::string filename) {
 	//TODO: Handling to allow for automatic deletion
+	if (textures[filename]) {
+		return textures[filename];
+	}
 	GLuint tex;
 	glGenTextures(1, &tex);
+	GLenum err = glGetError();
 	int width, height, channels;
 	unsigned char* data = nullptr;
 	data = stbi_load(filename.c_str(), &width, &height, &channels, 0);
-	glBindTexture(GL_TEXTURE_2D, tex);
-	glTexImage2D(GL_TEXTURE_2D, 0, channels == 3 ? GL_RGB : GL_RGBA, width, height, 0, channels == 3 ? GL_RGB : GL_RGBA, GL_UNSIGNED_BYTE, data);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	stbi_image_free(data);
+	if (data) {
+		glBindTexture(GL_TEXTURE_2D, tex);
+		glTexImage2D(GL_TEXTURE_2D, 0, channels == 3 ? GL_RGB : GL_RGBA, width, height, 0, channels == 3 ? GL_RGB : GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		stbi_image_free(data);
+		textures.insert_or_assign(filename, tex);
+	}
 	return tex;
 }

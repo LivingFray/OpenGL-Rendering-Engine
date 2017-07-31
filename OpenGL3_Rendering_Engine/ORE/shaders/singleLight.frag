@@ -59,6 +59,7 @@ void calcPointLight();
 void calcSpotLight();
 
 void main(){
+	color = vec4(0.0, 0.0, 0.0, 0.0);
 	if(lightType == 0){
 		calcDirectional();
 	} else if(lightType == 1) {

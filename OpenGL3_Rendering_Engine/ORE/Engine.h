@@ -10,6 +10,7 @@
 namespace ORE {
 	extern GLFWwindow* window;
 	extern std::map<std::string, GLuint> programs;
+	extern std::map<std::string, GLuint> textures;
 	void __sharedInit();
 	void init(int width = 800, int height = 600, const char* title = "OpenGL Game", GLFWmonitor* monitor = NULL, GLFWwindow* share = NULL);
 	void initFullscreen(const char* title = "OpenGL game", GLFWmonitor* monitor = NULL);

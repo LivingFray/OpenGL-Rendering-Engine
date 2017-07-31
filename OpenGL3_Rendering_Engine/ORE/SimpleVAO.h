@@ -1,11 +1,11 @@
 #pragma once
 #include "Engine.h"
-#include "Mesh.h"
+#include "BaseMesh.h"
 #include <vector>
 
 namespace ORE {
 	class SimpleVAO :
-		public Mesh {
+		public BaseMesh {
 	public:
 		SimpleVAO();
 		~SimpleVAO();

@@ -27,7 +27,7 @@ namespace ORE {
 			glEnable(GL_DEPTH_TEST);
 			glDepthFunc(GL_LESS);
 			for(Renderable* r: renderables) {
-				r->draw(this);
+				if (r->visible) { r->draw(this); }
 			}
 			//Draw the skybox
 			if (skybox) {

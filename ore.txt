@@ -12,15 +12,36 @@ World
     |-FOV
     |-Clip (-X/+X/-Y/+Y/Near/Far)
 
-
+TODO:
 
 Lighting: Look into deferred shading/lighting
 Shadows: Group objects into static and dynamic, precalculate depth map for static objects + static lights
-Skybox
 
-Shaders/Programs: Cleanup unused/add delete method
+Shaders/Programs: Cleanup unused shaders and add delete method
 Load shaders at compile time
+Dynamically compiled shaders?
+Geometry shaders?
+
+Culling
 
 Parent hierarchy for model matrices
 	Handle parents being deleted
+	Convert camera to hierarchy
 Texture handler (memory management)
+
+Reflection mapping (Refraction? Realtime reflections?)
+
+Readonly front/right/up properties of transformables
+
+Model Loading
+
+Post-processing
+	Depth of field
+	Motion blur
+	Bloom
+	Gamma correction
+
+More Object types
+	Instanced
+	Streamed/Dynamic
+	Indexed objects

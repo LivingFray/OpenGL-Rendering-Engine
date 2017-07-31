@@ -3,6 +3,7 @@
 #include "../ORE/SimpleVAO.h"
 #include "../ORE/Skybox.h"
 #include "../ORE/Light.h"
+#include "../ORE/Model.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
 //TODO: ADD Callbacks
@@ -106,6 +107,9 @@ int main() {
 	ORE::World world;
 	ORE::Camera* cam = world.getCamera();
 	ORE::SimpleVAO testVAO;
+	ORE::Model suit("Testing/nanosuit/nanosuit.obj");
+	suit.setPosition(glm::vec3(0.0f, 0.0f, 4.0f));
+	//suit.visible = false;
 	GLuint texs[] = {
 		ORE::loadImage("Testing/tmp.png"),
 		ORE::loadImage("Testing/tmpSpec.png"),
@@ -176,6 +180,7 @@ int main() {
 	test2.setScale(glm::vec3(0.5f, 0.5f, 0.5f));
 	world.addRenderable(&testVAO);
 	world.addRenderable(&test2);
+	world.addRenderable(&suit);
 	cam->setPosition(glm::vec3(0, 0, 0));
 	glfwSwapInterval(1);
 	int w, h;
@@ -197,8 +202,9 @@ int main() {
 			testPos += elapsed;
 			testVAO.setPosition(glm::vec3(testPos, 0.0f, 0.0f));
 		}
+		glm::vec3 p = cam->getPosition();
 		//test2.setPosition(cam->getPosition());
-		std::string t = std::to_string(front.x) + ", " + std::to_string(front.y) + ", " + std::to_string(front.z);
+		std::string t = std::to_string(p.x) + ", " + std::to_string(p.y) + ", " + std::to_string(p.z);
 		glfwSetWindowTitle(ORE::window, t.c_str());
 		world.draw();
 	}
