@@ -56,7 +56,7 @@ void main(){
 	//worldNormal = transInvModel * vertexNormal;
 	//Pass texture coords to fragment shader
 	texCoords = vertexUV;
-	gl_Position = projection * view * vec4(vertexPosition, 1.0);
+	gl_Position = projection * view * model * vec4(vertexPosition, 1.0);
 	//Calculate TBN
 	vec3 T = normalize(vec3(transInvModel * vertexTangent));
 	vec3 B = normalize(vec3(transInvModel * vertexBitangent));
